@@ -3,9 +3,10 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "scripts": {
     "test": "jest --runInBand",
-    "build": "tsc"
+    "build": "tsc",
+    "benchmark": "node dist/src/benchmark.js",
+    "dashboard": "node dist/src/server.js"
   },
   "keywords": [],
   "author": "",
