@@ -1,6 +1,45 @@
 # B2B Wholesale Payment Reconciliation & Cash Application Engine
 
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.x-blue?logo=typescript)](https://www.typescriptlang.org/)
+[![Node.js](https://img.shields.io/badge/Node.js-18+-green?logo=node.js)](https://nodejs.org/)
+[![ISC License](https://img.shields.io/badge/License-ISC-yellow.svg)](LICENSE)
+
 An enterprise-grade, idempotent financial reconciliation engine designed for B2B wholesale distribution and merchant payment platforms (e.g., Freely Payments, MarginEdge). Built in **TypeScript** with strict double-entry ledger verification.
+
+> **TL;DR** — Wholesale distributors bleed money on messy payments: lump-sum remittances spread across multiple invoices, short-paid deductions with no warning, and double-posted cash from flaky webhooks. This engine fixes all three — it allocates every payment to the right invoices, auto-triages disputes into credit memos, and guarantees the ledger always balances. As a bonus, it emits Level 3 interchange data that cuts card processing fees from ~2.9% to ~1.6%.
+
+## Quick Start
+
+```bash
+git clone https://github.com/djjrip/freely-reconciliation-engine.git
+cd freely-reconciliation-engine
+npm install
+
+# Run the test suite
+npm test
+
+# Build + run the dashboard server
+npm run build
+npm run dashboard
+
+# Run throughput benchmarks
+npm run benchmark
+```
+
+## Project Structure
+
+```
+src/
+├── reconciliationEngine.ts  # Core remittance allocation & invoice matching
+├── sagaWorkflow.ts          # Settlement saga orchestration with compensation
+├── erpStore.ts              # ERP persistence: ledger, journal entries
+├── server.ts                # HTTP API + webhook ingestion (dashboard)
+├── benchmark.ts             # Throughput benchmarks
+└── types.ts                 # Domain types: invoices, payments, journal entries
+__tests__/                   # Jest suite: idempotency, disputes, L3 payloads
+docs/
+└── architecture-comparison.md
+```
 
 ---
 
@@ -68,3 +107,7 @@ npm test
 * `Strict Idempotency`: Proves duplicate payment submissions return cached states without altering ledger balances.
 * `Level 3 Interchange Payload`: Verifies line-item extraction for Visa/Mastercard interchange minimization.
 * `Amount Mismatch Rejection`: Ensures inconsistent remittance advice is rejected before touching the ledger.
+
+---
+
+Built by [Jayson Quindao](https://github.com/djjrip) — Founder & Full-Stack Engineer @ GG Loop. Open to engineering roles: [LinkedIn](https://linkedin.com/in/jaysonquindao) · jquindao1@icloud.com
